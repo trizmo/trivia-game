@@ -1,0 +1,44 @@
+body {
+  background: url(../imgs/bg.gif); 
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: black;
+  background-attachment: fixed;
+}
+
+.game-display{
+  margin-top:25px;
+  background-color: lightsalmon;
+
+}
+
+.answers-display {
+  font-family: 'Metal Mania', cursive;
+  font-size:2rem;
+
+}
+
+.welcome-text-head{
+  font-family: 'Finger Paint', cursive;
+  font-size: 4rem;
+}
+
+.welcome-text-detail{
+  font-family: 'Barrio', cursive;
+  font-size: 2rem;
+}
+
+.welcomeScreen-next {
+  margin-bottom: 10px;
+}
+
+/* font-family: 'Creepster', cursive;
+font-family: 'Finger Paint', cursive;
+font-family: 'Nosifer', cursive;
+font-family: 'Eater', cursive;
+font-family: 'Mountains of Christmas', cursive;
+font-family: 'Pirata One', cursive;
+font-family: 'Jolly Lodger', cursive;
+font-family: 'Metal Mania', cursive;
+font-family: 'Barrio', cursive;
+font-family: 'Bigelow Rules', cursive; */
