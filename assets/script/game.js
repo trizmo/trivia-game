@@ -16,6 +16,8 @@ $(document).ready(function () {
     speechPunish: "",
     speechScream: "",
     speechCongrats: "",
+    backgroundMusic: "",
+    speechTimeOut: "",
 
 
     // ## SCARY IMAGES
@@ -67,6 +69,24 @@ $(document).ready(function () {
       },
 
       {
+        question: "What is a Rat King?",
+        wrongAnswers: ["a giant rat", "when a group of rats become fused together by their tails", "A medviel rat that were a prized find by hunters", "A story made up by parents to scare their children into sleeping"],
+        rightAnswer: "when a group of rats become fused together by their tails"
+      },
+
+      {
+        question: "How long can a human head remain conscious AFTER it's been decapitated?",
+        wrongAnswers: ["It immediately loses consciousness", "20 seconds", "1 minute", "Forever!"],
+        rightAnswer: "20 seconds"
+      },
+
+      {
+        question: "Anually, about how many people die due to a doctor's poor hand writing?",
+        wrongAnswers: ["7000", "700", "70", "None"],
+        rightAnswer: "7000"
+      },
+
+      {
         question: "In Poveglia, Italy, How much of the soil is made from human bones?",
         wrongAnswers: ["None of it", "10%", "50%", "All of it",],
         rightAnswer: "50%"
@@ -93,7 +113,13 @@ $(document).ready(function () {
           console.log("timerstopped within function: timer");
           clearInterval(timerFunc);
           game.lives--;
-          game.punishmentScreen();
+        
+          if (game.lives === 0) {
+            game.livesOut();
+          } else {
+            game.timeOutPunishmentScreen();
+          }
+
           console.log("TIMES OUT! Lives left: " + game.lives);
 
         }
@@ -170,16 +196,78 @@ $(document).ready(function () {
       speechCongrats.pause();
     },
 
-    speechGameOver: function() {
+    speechGameOver: function () {
       speechGameOver = document.createElement("audio");
       speechGameOver.setAttribute("src", "./assets/speech/gameOver.wav");
       speechGameOver.play();
     },
 
-    stopSpeGO: function() {
+    stopSpeGO: function () {
       speechGameOver.pause();
-
     },
+
+    backgroundMusic: function () {
+      backgroundMusic = document.createElement("audio");
+      backgroundMusic.setAttribute("src", "./assets/speech/bgMusic.wav");
+      backgroundMusic.play();
+    },
+
+    stopSpeBGM: function () {
+      backgroundMusic.pause();
+    },
+
+    speechTimeOut: function () {
+      speechTimeOut = document.createElement("audio");
+      speechTimeOut.setAttribute("src", "./assets/speech/timeOut.wav");
+      speechTimeOut.play();
+    },
+
+    stopSpeTO: function () {
+      speechTimeOut.pause();
+    },
+
+    timeOutPunishmentScreen: function () {
+      game.round++
+      game.speechTimeOut();
+      $("#gameDisp").html(" ");
+      $("#gameDisp").append($("<h2/>", { "class": "text-center welcome-text-head", text: "time is OUT!!" }));
+      $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "don't take so long" }));
+      $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "you lose another finger.." }));
+      $("#gameDisp").append($("<h2/>", { "class": "text-center welcome-text-detail", text: "chances left: " + game.lives }));
+      $("#gameDisp").append($("<button/>", { "class": "btn btn-danger center-block col-md-4", type: "submit", text: "Proceed", id: "punishScreen-next" }));
+
+      $("#punishScreen-next").on("click", function () {
+        game.stopSpeTO();
+        game.speechScreem();
+        $("#gameDisp").hide();
+
+        let randy = Math.floor(Math.random() * 10);
+        console.log(game.scare[randy])
+
+        $("#punishDisp").hide();
+        $("body").css("background", "url(" + game.scare[randy] + ")");
+        $("body").css("background-size", "cover");
+        $("body").css("background-repeat", "no-repeat");
+        $("body").css("background-position", "center");
+        $("body").css("background-color", "black");
+        $("body").css("background-attachment", "fixed");
+
+        setTimeout(function () {
+          $("#punishDisp").hide();
+          $("body").css("background", "url(./assets/imgs/bg.gif)");
+          $("body").css("background-repeat", "no-repeat");
+          $("body").css("background-position", "center");
+          $("body").css("background-color", "black");
+          $("body").css("background-attachment", "fixed");
+          $("#gameDisp").fadeIn(1000);
+          game.questionScreen();
+        }, 1000 * 5);
+
+
+      });
+    },
+
+
 
 
     punishmentScreen: function () {
@@ -237,6 +325,12 @@ $(document).ready(function () {
 
 
     welcomeScreen: function () {
+      round = 1;
+      timer = 10;
+      score = 0;
+      lives = 3;
+
+      game.backgroundMusic()
       $("#gameDisp").removeClass("warningDisp");
 
       $("#gameDisp").html(" ");
@@ -254,19 +348,6 @@ $(document).ready(function () {
         game.questionScreen();
         game.stopSpeWel();
       });
-    },
-
-    livesOut: function () {
-      if (game.lives === 0) {
-        $("#gameDisp").html(" ");
-        game.speechGameOver();
-        $("#gameDisp").append($("<h2/>", { "class": "text-center welcome-text-head", text: "no more chances" }));
-        $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "you're out of chances" }));
-        $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "not a chance to spare" }));
-        $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "it's time to meet your maker" }));
-        $("#gameDisp").append($("<button/>", { "class": "btn btn-danger center-block col-md-4", type: "submit", text: "Proceed", id: "welcomeScreen-next" }));
-
-      }
     },
 
 
@@ -303,14 +384,11 @@ $(document).ready(function () {
             game.guessWrong = true
             console.log("PUNISHMENT!");
 
-            // game.punishmentScreen();
-            // game.livesOut();
-
-                 if (game.lives === 0) {
-          game.livesOut();
-        } else {
-          game.punishmentScreen();
-        }
+            if (game.lives === 0) {
+              game.livesOut();
+            } else {
+              game.punishmentScreen();
+            }
 
           }
         });
@@ -324,13 +402,53 @@ $(document).ready(function () {
       $("#gameDisp").html(" ");
       $("#gameDisp").addClass("congratsDisp");
       $("#gameDisp").append($("<h2/>", { "class": "text-center", text: "you survived this time..." }));
+      $("#gameDisp").append($("<h2/>", { "class": "text-center", text: "shall we keep going?" }));
       $("#gameDisp").append($("<h2/>", { "class": "text-center", text: "your current score: " + game.score }));
-      $("#gameDisp").append($("<button/>", { "class": "btn btn-danger col-md-4", type: "submit", text: "Proceed", id: "rightAnswerDisplay-next" }));
+      $("#gameDisp").append($("<h2/>", { "class": "text-center", text: "chances left: " + game.lives }));
+      $("#gameDisp").append($("<button/>", { "class": "btn btn-warning col-md-4", type: "submit", text: "Proceed", id: "rightAnswerDisplay-next" }));
       $("#rightAnswerDisplay-next").on("click", function () {
         $("#gameDisp").removeClass("congratsDisp");
         game.stopSpeCon();
         game.questionScreen();
       });
+    },
+
+    livesOut: function () {
+      if (game.lives === 0) {
+        $("#gameDisp").html(" ");
+        game.speechGameOver();
+        $("#gameDisp").append($("<h2/>", { "class": "text-center welcome-text-head", text: "no more chances" }));
+        $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "you're out of chances" }));
+        $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "not a chance to spare" }));
+        $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "it's time to meet your maker" }));
+        $("#gameDisp").append($("<button/>", { "class": "btn btn-danger center-block col-md-4", type: "submit", text: "Proceed", id: "livesOut-next" }));
+
+        $("#livesOut-next").click(function () {
+          $("#gameDisp").html(" ");
+          $("#gameDisp").append($("<h2/>", { "class": "text-center welcome-text-head", text: "Game Over" }));
+          $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "nice try, but you died" }));
+          $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "final score: " + game.score}));
+
+          $("#gameDisp").append($("<button/>", { "class": "btn btn-danger center-block quit-btn col-md-3", type: "submit", text: "Quit", id: "quit-next" }));
+
+          $("#gameDisp").append($("<button/>", { "class": "btn btn-danger center-block play-again-btn col-md-3", type: "submit", text: "Play Again", id: "play-again-next" }));
+
+          $("#quit-next").click(function (){
+            location.assign(url("https://www.google.com"));
+          });
+
+          $("#play-again-next").click(function (){
+            game.stopSpeBGM();
+            game.welcomeScreen();
+          });
+
+
+
+
+
+        });
+
+      }
     }
   }
 

@@ -17,13 +17,13 @@ body {
 }
 
 .warningDisp {
-  color: red;
+  color: white;
   background-color: rgba(99, 99, 99, 0.3);
 
 }
 
 .congratsDisp {
-  font-family: 'Creepster', cursive;
+  font-family: 'Eater', cursive;
   background-color: rgba(99, 99, 99, 0.3);
 
 
@@ -34,6 +34,14 @@ body {
   font-family: 'Finger Paint', cursive;
   font-size: 2.75rem;
 
+}
+
+.play-again-btn{
+  margin: 10px;
+}
+
+.quit-btn{
+  margin: 10px;
 }
 
 .timerDisp {
