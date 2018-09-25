@@ -4,11 +4,47 @@ body {
   background-position: center;
   background-color: black;
   background-attachment: fixed;
+  color: white;
 }
 
 .game-display{
   margin-top:25px;
-  background-color: lightsalmon;
+  padding:25px;
+  /* background-color: lightsalmon; */
+  /* background-color: rgba(99, 99, 99, 0.56); */
+
+
+}
+
+.warningDisp {
+  color: red;
+  background-color: rgba(99, 99, 99, 0.3);
+
+}
+
+.congratsDisp {
+  font-family: 'Creepster', cursive;
+  background-color: rgba(99, 99, 99, 0.3);
+
+
+}
+
+.question {
+  color: darkred;
+  font-family: 'Finger Paint', cursive;
+  font-size: 2.75rem;
+
+}
+
+.timerDisp {
+  font-family: 'Barrio', cursive;
+
+
+}
+
+.roundDisp {
+  font-family: 'Barrio', cursive;
+
 
 }
 
@@ -19,6 +55,7 @@ body {
 }
 
 .welcome-text-head{
+  color: darkred;
   font-family: 'Finger Paint', cursive;
   font-size: 4rem;
 }
