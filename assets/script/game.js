@@ -208,7 +208,7 @@ $(document).ready(function () {
 
     backgroundMusic: function () {
       backgroundMusic = document.createElement("audio");
-      backgroundMusic.setAttribute("src", "./assets/speech/bgMusic.wav");
+      backgroundMusic.setAttribute("src", "./assets/speech/bgMusic.mp3");
       backgroundMusic.play();
     },
 
