@@ -4,7 +4,7 @@ $(document).ready(function () {
 
   var game = {
     round: 1,
-    timer: 10,
+    timer: 20,
     guessRight: false,
     score: 0,
     lives: 3,
@@ -18,6 +18,7 @@ $(document).ready(function () {
     speechCongrats: "",
     backgroundMusic: "",
     speechTimeOut: "",
+    playedArr: [],
 
 
     // ## SCARY IMAGES
@@ -29,91 +30,101 @@ $(document).ready(function () {
       {
         question: "What movie was so scary, when the trailer was shown people ran out of the room, some even vomiting?",
         wrongAnswers: ["IT", "The Ring", "The Exorcist", "Halloween"],
-        rightAnswer: "The Exorcist"
+        rightAnswer: "The Exorcist",
+        id: 1
       },
 
       {
         question: "During the 70's and 80's, over 100 of perfectly healthy people died unexplainibly. This inspired Wes Craven with the idea to help create which movie?",
         wrongAnswers: ["28 Days Later", "The Blair Witch Project", "Nightmare on Elm Street", "Saw"],
-        rightAnswer: "Nightmare on Elm Street"
+        rightAnswer: "Nightmare on Elm Street",
+        id: 2
       },
 
       {
         question: "What medieval machine was used to chop people's heads off?",
         wrongAnswers: ["the guillotine", "the iron maiden", "brazen bull", "the iron chair"],
-        rightAnswer: "the guillotine"
+        rightAnswer: "the guillotine",
+        id: 3
       },
 
       {
         question: "What kind of pill has ruied relationships and have caused their partner to fall out of love?",
         wrongAnswers: ["anti-love", "anti-inflamitory", "methadone", "anti-depressants"],
-        rightAnswer: "anti-depressants"
+        rightAnswer: "anti-depressants",
+        id: 4
       },
 
       {
         question: "What did Queen Elizabeth I use to cover up the scares left on her face from smallpox as a child?",
         wrongAnswers: ["human nails", "human fat", "human blood", "human skin"],
-        rightAnswer: "human fat"
+        rightAnswer: "human fat",
+        id: 5
       },
 
       {
         question: "Big Brother Watches everything- In 2015, how many CCTV's were in London?",
         wrongAnswers: ["224", "4224", "42,200", "422,000"],
-        rightAnswer: "422,000"
+        rightAnswer: "422,000",
+        id: 6
       },
 
       {
         question: "According to the Catholic religion, where do souls go to suffer for the sins they commited while they were still alive?",
         wrongAnswers: ["Purgatory", "Hades", "Hell", "The Abyss"],
-        rightAnswer: "Purgatory"
+        rightAnswer: "Purgatory",
+        id: 7
       },
 
       {
         question: "What is a Rat King?",
         wrongAnswers: ["a giant rat", "when a group of rats become fused together by their tails", "A medviel rat that were a prized find by hunters", "A story made up by parents to scare their children into sleeping"],
-        rightAnswer: "when a group of rats become fused together by their tails"
+        rightAnswer: "when a group of rats become fused together by their tails",
+        id: 8
       },
 
       {
         question: "How long can a human head remain conscious AFTER it's been decapitated?",
         wrongAnswers: ["It immediately loses consciousness", "20 seconds", "1 minute", "Forever!"],
-        rightAnswer: "20 seconds"
+        rightAnswer: "20 seconds",
+        id: 9
       },
 
       {
         question: "Anually, about how many people die due to a doctor's poor hand writing?",
         wrongAnswers: ["7000", "700", "70", "None"],
-        rightAnswer: "7000"
+        rightAnswer: "7000",
+        id: 10
       },
 
       {
         question: "In Poveglia, Italy, How much of the soil is made from human bones?",
         wrongAnswers: ["None of it", "10%", "50%", "All of it",],
-        rightAnswer: "50%"
+        rightAnswer: "50%",
+        id: 11
       }
     ],
 
 
     // ## TIMER FUNCTION
     startTimer: function () {
-      game.timer = 10;
+      game.timer = 20;
       var timerFunc = setInterval(function () {
         game.timer--;
         if (game.guessWrong) {
           console.log("timerstopped within function: guessWrong");
-
           clearInterval(timerFunc);
         }
-        if (game.guessRight) {
+
+        else if (game.guessRight) {
           console.log("timerstopped within function: guessRight");
-
           clearInterval(timerFunc);
         }
-        if (game.timer === 0) {
+
+        else if (game.timer === 0) {
           console.log("timerstopped within function: timer");
           clearInterval(timerFunc);
           game.lives--;
-        
           if (game.lives === 0) {
             game.livesOut();
           } else {
@@ -149,9 +160,20 @@ $(document).ready(function () {
       }
     },
 
-    // ## RANDOMIZER 8
+    // ## RANDOMIZER 11
     rand: function () {
-      game.randnum = Math.floor(Math.random() * (8))
+      let randy = Math.floor(Math.random() * (11))
+      if (this.playedArr.includes(randy)) {
+        console.log("rand function picked duplicate number, picking again...");
+        game.rand();
+      } else if (this.playedArr.length === 10) {
+        game.survived();
+      } else {
+        console.log("original number picked");
+        console.log("length of playedArr: " + this.playedArr.length)
+        game.playedArr.push(randy);
+        game.randnum = randy
+      }
     },
 
 
@@ -326,10 +348,9 @@ $(document).ready(function () {
 
     welcomeScreen: function () {
       game.round = 1;
-      game.timer = 10;
+      game.timer = 20;
       game.score = 0;
       game.lives = 3;
-      console.log(game.lives);
 
       game.backgroundMusic()
       $("#gameDisp").removeClass("warningDisp");
@@ -350,7 +371,6 @@ $(document).ready(function () {
         game.stopSpeWel();
       });
     },
-
 
     questionScreen: function () {
       game.rand();
@@ -414,6 +434,31 @@ $(document).ready(function () {
       });
     },
 
+    survived: function () {
+        $("#gameDisp").html(" ");
+        $("#gameDisp").append($("<h2/>", { "class": "text-center welcome-text-head", text: "you survived all my questions" }));
+        $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "you're still gonna die" }));
+        $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "happy halloween!" }));
+        $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "final score: " + game.score }));
+        $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "you made it to round: " + game.round }));
+        $("#gameDisp").append($("<button/>", { "class": "btn btn-danger center-block quit-btn col-md-3", type: "submit", text: "Quit", id: "quit-next" }));
+        $("#gameDisp").append($("<button/>", { "class": "btn btn-danger center-block play-again-btn col-md-3", type: "submit", text: "Play Again", id: "play-again-next" }));
+
+        $("#quit-next").click(function () {
+          location.assign(url("https://www.google.com"));
+        });
+
+        $("#play-again-next").click(function () {
+          console.log(game.lives);
+          game.stopSpeBGM();
+          game.welcomeScreen();
+        });
+
+      },
+  
+
+
+
     livesOut: function () {
       if (game.lives === 0) {
         $("#gameDisp").html(" ");
@@ -428,33 +473,21 @@ $(document).ready(function () {
           $("#gameDisp").html(" ");
           $("#gameDisp").append($("<h2/>", { "class": "text-center welcome-text-head", text: "Game Over" }));
           $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "nice try, but you died" }));
-          $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "final score: " + game.score}));
-
+          $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "final score: " + game.score }));
+          $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "you made it to round: " + game.round }));
           $("#gameDisp").append($("<button/>", { "class": "btn btn-danger center-block quit-btn col-md-3", type: "submit", text: "Quit", id: "quit-next" }));
-
           $("#gameDisp").append($("<button/>", { "class": "btn btn-danger center-block play-again-btn col-md-3", type: "submit", text: "Play Again", id: "play-again-next" }));
 
-          $("#quit-next").click(function (){
+          $("#quit-next").click(function () {
             location.assign(url("https://www.google.com"));
           });
 
-          $("#play-again-next").click(function (){
-            game.round = 1;
-            game.timer = 10;
-            game.score = 0;
-            game.lives = 3;
+          $("#play-again-next").click(function () {
             console.log(game.lives);
-
             game.stopSpeBGM();
             game.welcomeScreen();
           });
-
-
-
-
-
         });
-
       }
     }
   }
