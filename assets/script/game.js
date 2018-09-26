@@ -351,6 +351,7 @@ $(document).ready(function () {
       game.timer = 20;
       game.score = 0;
       game.lives = 3;
+      game.playedArr = [];
 
       game.backgroundMusic()
       $("#gameDisp").removeClass("warningDisp");
@@ -435,27 +436,27 @@ $(document).ready(function () {
     },
 
     survived: function () {
-        $("#gameDisp").html(" ");
-        $("#gameDisp").append($("<h2/>", { "class": "text-center welcome-text-head", text: "you survived all my questions" }));
-        $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "you're still gonna die" }));
-        $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "happy halloween!" }));
-        $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "final score: " + game.score }));
-        $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "you made it to round: " + game.round }));
-        $("#gameDisp").append($("<button/>", { "class": "btn btn-danger center-block quit-btn col-md-3", type: "submit", text: "Quit", id: "quit-next" }));
-        $("#gameDisp").append($("<button/>", { "class": "btn btn-danger center-block play-again-btn col-md-3", type: "submit", text: "Play Again", id: "play-again-next" }));
+      $("#gameDisp").html(" ");
+      $("#gameDisp").append($("<h2/>", { "class": "text-center welcome-text-head", text: "you survived all my questions" }));
+      $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "you're still gonna die" }));
+      $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "happy halloween!" }));
+      $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "final score: " + game.score }));
+      $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "you made it to round: " + game.round }));
+      $("#gameDisp").append($("<button/>", { "class": "btn btn-danger center-block quit-btn col-md-3", type: "submit", text: "Quit", id: "quit-next" }));
+      $("#gameDisp").append($("<button/>", { "class": "btn btn-danger center-block play-again-btn col-md-3", type: "submit", text: "Play Again", id: "play-again-next" }));
 
-        $("#quit-next").click(function () {
-          location.assign(url("https://www.google.com"));
-        });
+      $("#quit-next").click(function () {
+        location.assign(url("https://www.google.com"));
+      });
 
-        $("#play-again-next").click(function () {
-          console.log(game.lives);
-          game.stopSpeBGM();
-          game.welcomeScreen();
-        });
+      $("#play-again-next").click(function () {
+        console.log(game.lives);
+        game.stopSpeBGM();
+        game.welcomeScreen();
+      });
 
-      },
-  
+    },
+
 
 
 
