@@ -18,6 +18,7 @@ $(document).ready(function () {
     speechCongrats: "",
     backgroundMusic: "",
     speechTimeOut: "",
+    playedArr: [],
 
 
     // ## SCARY IMAGES
@@ -29,67 +30,78 @@ $(document).ready(function () {
       {
         question: "What movie was so scary, when the trailer was shown people ran out of the room, some even vomiting?",
         wrongAnswers: ["IT", "The Ring", "The Exorcist", "Halloween"],
-        rightAnswer: "The Exorcist"
+        rightAnswer: "The Exorcist",
+        id: 1
       },
 
       {
         question: "During the 70's and 80's, over 100 of perfectly healthy people died unexplainibly. This inspired Wes Craven with the idea to help create which movie?",
         wrongAnswers: ["28 Days Later", "The Blair Witch Project", "Nightmare on Elm Street", "Saw"],
-        rightAnswer: "Nightmare on Elm Street"
+        rightAnswer: "Nightmare on Elm Street",
+        id: 2
       },
 
       {
         question: "What medieval machine was used to chop people's heads off?",
         wrongAnswers: ["the guillotine", "the iron maiden", "brazen bull", "the iron chair"],
-        rightAnswer: "the guillotine"
+        rightAnswer: "the guillotine",
+        id: 3
       },
 
       {
         question: "What kind of pill has ruied relationships and have caused their partner to fall out of love?",
         wrongAnswers: ["anti-love", "anti-inflamitory", "methadone", "anti-depressants"],
-        rightAnswer: "anti-depressants"
+        rightAnswer: "anti-depressants",
+        id: 4
       },
 
       {
         question: "What did Queen Elizabeth I use to cover up the scares left on her face from smallpox as a child?",
         wrongAnswers: ["human nails", "human fat", "human blood", "human skin"],
-        rightAnswer: "human fat"
+        rightAnswer: "human fat",
+        id: 5
       },
 
       {
         question: "Big Brother Watches everything- In 2015, how many CCTV's were in London?",
         wrongAnswers: ["224", "4224", "42,200", "422,000"],
-        rightAnswer: "422,000"
+        rightAnswer: "422,000",
+        id: 6
       },
 
       {
         question: "According to the Catholic religion, where do souls go to suffer for the sins they commited while they were still alive?",
         wrongAnswers: ["Purgatory", "Hades", "Hell", "The Abyss"],
-        rightAnswer: "Purgatory"
+        rightAnswer: "Purgatory",
+        id: 7
       },
 
       {
         question: "What is a Rat King?",
         wrongAnswers: ["a giant rat", "when a group of rats become fused together by their tails", "A medviel rat that were a prized find by hunters", "A story made up by parents to scare their children into sleeping"],
-        rightAnswer: "when a group of rats become fused together by their tails"
+        rightAnswer: "when a group of rats become fused together by their tails",
+        id: 8
       },
 
       {
         question: "How long can a human head remain conscious AFTER it's been decapitated?",
         wrongAnswers: ["It immediately loses consciousness", "20 seconds", "1 minute", "Forever!"],
-        rightAnswer: "20 seconds"
+        rightAnswer: "20 seconds",
+        id: 9
       },
 
       {
         question: "Anually, about how many people die due to a doctor's poor hand writing?",
         wrongAnswers: ["7000", "700", "70", "None"],
-        rightAnswer: "7000"
+        rightAnswer: "7000",
+        id: 10
       },
 
       {
         question: "In Poveglia, Italy, How much of the soil is made from human bones?",
         wrongAnswers: ["None of it", "10%", "50%", "All of it",],
-        rightAnswer: "50%"
+        rightAnswer: "50%",
+        id: 11
       }
     ],
 
@@ -149,9 +161,18 @@ $(document).ready(function () {
       }
     },
 
-    // ## RANDOMIZER 8
+    // ## RANDOMIZER 10
     rand: function () {
-      game.randnum = Math.floor(Math.random() * (8))
+      let randy = Math.floor(Math.random() * (10))
+      if(this.playedArr.includes(randy)){
+        console.log("rand function picked duplicate number, picking again...");
+        randy = Math.floor(Math.random()* 10)
+      } else {
+        console.log("original number picked");
+        game.playedArr.push(randy);
+        game.randnum = randy
+      }
+
     },
 
 
@@ -325,10 +346,10 @@ $(document).ready(function () {
 
 
     welcomeScreen: function () {
-      round = 1;
-      timer = 10;
-      score = 0;
-      lives = 3;
+      game.round = 1;
+      game.timer = 10;
+      game.score = 0;
+      game.lives = 3;
 
       game.backgroundMusic()
       $("#gameDisp").removeClass("warningDisp");
@@ -349,7 +370,6 @@ $(document).ready(function () {
         game.stopSpeWel();
       });
     },
-
 
     questionScreen: function () {
       game.rand();
