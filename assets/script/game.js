@@ -325,10 +325,11 @@ $(document).ready(function () {
 
 
     welcomeScreen: function () {
-      round = 1;
-      timer = 10;
-      score = 0;
-      lives = 3;
+      game.round = 1;
+      game.timer = 10;
+      game.score = 0;
+      game.lives = 3;
+      console.log(game.lives);
 
       game.backgroundMusic()
       $("#gameDisp").removeClass("warningDisp");
@@ -438,6 +439,12 @@ $(document).ready(function () {
           });
 
           $("#play-again-next").click(function (){
+            game.round = 1;
+            game.timer = 10;
+            game.score = 0;
+            game.lives = 3;
+            console.log(game.lives);
+
             game.stopSpeBGM();
             game.welcomeScreen();
           });
