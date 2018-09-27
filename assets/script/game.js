@@ -278,6 +278,26 @@ $(document).ready(function () {
       backgroundMusic.pause();
     },
 
+    gameMenubgMusic: function () {
+      gameMenubgMusic = document.createElement("audio");
+      gameMenubgMusic.setAttribute("src", "./assets/music/gameMenu-bgMusic.mp3");
+      gameMenubgMusic.play();
+    },
+
+    stopGameMenubgMusic: function () {
+      gameMenubgMusic.pause();
+    },
+
+    click: function () {
+      click = document.createElement("audio");
+      click.setAttribute("src", "./assets/music/click.wav");
+      click.play();
+    },
+
+    stopClick: function () {
+      click.pause();
+    },
+
     speechTimeOut: function () {
       speechTimeOut = document.createElement("audio");
       speechTimeOut.setAttribute("src", "./assets/speech/timeOut.wav");
@@ -299,6 +319,7 @@ $(document).ready(function () {
       $("#gameDisp").append($("<p/>", { "class": "button", text: "Proceed", id: "punishScreen-next" }));
 
       $("#punishScreen-next").on("click", function () {
+        game.click();
         game.stopSpeTO();
         game.speechScreem();
         $("#gameDisp").hide();
@@ -339,8 +360,10 @@ $(document).ready(function () {
       $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "Stick out your hand" }));
       $("#gameDisp").append($("<h2/>", { "class": "text-center welcome-text-detail", text: "chances left: " + game.lives }));
       $("#gameDisp").append($("<p/>", { "class": "button", text: "Proceed", id: "punishScreen-next" }));
+      $("#gameDisp").fadeIn(100)
 
       $("#punishScreen-next").on("click", function () {
+        game.click();
         game.stopSpePun();
         game.speechScreem();
         $("#gameDisp").hide();
@@ -378,12 +401,29 @@ $(document).ready(function () {
       $("#gameDisp").append($("<span/>", { "class": "button", text: "Proceed", id: "welcomeScreen-next" }));
 
       $("#welcomeScreen-next").on("click", function () {
-        game.gameMenu();
+        $("#gameDisp").fadeOut(800)
+
+
+        game.click();
+
+        setTimeout(function () {
+          game.gameMenu();
+
+        }, 1255);
+
       });
 
     },
 
     gameMenu: function () {
+      $("body").css("background", "url(./assets/imgs/bg.gif)");
+      $("body").css("background-repeat", "no-repeat");
+      $("body").css("background-position", "center");
+      $("body").css("background-color", "black");
+      $("body").css("background-attachment", "fixed");
+
+      $("#gameDisp").fadeIn(1000)
+      game.gameMenubgMusic();
       $("#gameDisp").html(" ");
       $("#gameDisp").addClass("game-menu");
       $("#gameDisp").append($("<h2/>", { "class": "text-center welcome-text-head", text: "welcome to Purgatory" }));
@@ -395,6 +435,8 @@ $(document).ready(function () {
 
       $("#gameDisp").append($("<span/>", { class: "button", id: "playButton", text: "Play" }))
       $("#playButton").click(function () {
+        game.click();
+        game.stopGameMenubgMusic();
         game.welcomeScreen();
       });
 
@@ -409,26 +451,37 @@ $(document).ready(function () {
       game.playedArr = [];
 
       game.backgroundMusic()
+      $("#gameDisp").hide()
       $("#gameDisp").removeClass("warningDisp");
 
       $("#gameDisp").html(" ");
       $("#gameDisp").append($("<h2/>", { "class": "text-center welcome-text-head", text: "welcome to Purgatory" }));
       $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "You woke up in a abandoned medical facility" }));
       $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "Strapped to the bed and unable to move, you hear a voice over the PA systems" }));
-      $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "Answer these next questions correctly within 10 seconds, and your life will be spared for another round... How long will your death be prolonged?" }));
+      $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "Answer these next questions correctly within 20 seconds, and your life will be spared for another round... How long will your death be prolonged?" }));
       $("#gameDisp").append($("<span/>", { "class": "button", text: "Proceed", id: "welcomeScreen-next" }));
+      $("#gameDisp").fadeIn(1500)
 
       setTimeout(function () {
         game.speechWel();
       }, 1000 * .5);
 
       $("#welcomeScreen-next").on("click", function () {
-        game.questionScreen();
-        game.stopSpeWel();
+        $("#gameDisp").fadeOut()
+        game.click();
+
+        setTimeout(function () {
+          game.questionScreen();
+          game.stopSpeWel();
+        }, 500);
+
+
       });
     },
 
     questionScreen: function () {
+      $("#gameDisp").fadeIn(100)
+
       game.rand();
       if (game.randomPicker === true) {
         game.randomPicker = false;
@@ -438,13 +491,15 @@ $(document).ready(function () {
         $("#gameDisp").html(" ");
         $("#gameDisp").append($("<div/>", { "class": "timerDisp", "id": "timerDisp", text: "Time left: 20" }));
         $("#gameDisp").append($("<h2/>", { "class": "text-center roundDisp", text: "Round: " + this.round }));
-        $("#gameDisp").append($("<h2/>", { "class": "text-center roundDisp", text: "Your Question:"}));
+        $("#gameDisp").append($("<h2/>", { "class": "text-center roundDisp", text: "Your Question:" }));
         $("#gameDisp").append($("<h3/>", { "class": "question", text: this.questionList[game.randnum].question }));
         game.answerDisplay();
       } else {
         game.survived();
       }
     },
+
+
 
 
     answerDisplay: function () {
@@ -457,30 +512,35 @@ $(document).ready(function () {
         allAnswer.text(game.questionList[game.randnum].wrongAnswers[i]);
         $("#gameDisp").append(allAnswer);
         allAnswer.click(function () {
+          $("#gameDisp").fadeOut(100)
+          game.click();
           points = ($(this).data("answervalue"));
           game.answered += points;
-          if (game.answered === game.questionList[game.randnum].rightAnswer) {
-            game.score += game.timer + 1;
-            game.guessRight = true;
-            console.log("You live another round...");
-            game.rigthAnswerDisplay();
-          } else {
-            game.lives--;
-            game.guessWrong = true
-            console.log("PUNISHMENT!");
-
-            if (game.lives === 0) {
-              game.livesOut();
+          setTimeout(function () {
+            if (game.answered === game.questionList[game.randnum].rightAnswer) {
+              game.score += game.timer + 1;
+              game.guessRight = true;
+              console.log("You live another round...");
+              game.rigthAnswerDisplay();
             } else {
-              game.punishmentScreen();
-            }
+              game.lives--;
+              game.guessWrong = true
+              console.log("PUNISHMENT!");
 
-          }
+              if (game.lives === 0) {
+                game.livesOut();
+              } else {
+                game.punishmentScreen();
+              }
+
+            }
+          }, 500);
         });
       }
     },
 
     rigthAnswerDisplay: function () {
+      $("#gameDisp").fadeIn(100)
       game.speechCongrats();
       game.stopTimer();
       game.round++
@@ -492,6 +552,7 @@ $(document).ready(function () {
       $("#gameDisp").append($("<h2/>", { "class": "text-center", text: "chances left: " + game.lives }));
       $("#gameDisp").append($("<span/>", { "class": "button", text: "Proceed", id: "rightAnswerDisplay-next" }));
       $("#rightAnswerDisplay-next").on("click", function () {
+        game.click();
         $("#gameDisp").removeClass("congratsDisp");
         game.stopSpeCon();
         game.questionScreen();
@@ -499,6 +560,7 @@ $(document).ready(function () {
     },
 
     survived: function () {
+      $("#gameDisp").fadeIn(100)
       // update high score and high rounds
       if (game.highScore < game.score) {
         game.highScore = game.score
@@ -515,17 +577,43 @@ $(document).ready(function () {
       $("#gameDisp").append($("<p/>", { "class": "button", text: "Quit", id: "quit-next" }));
       $("#gameDisp").append($("<p/>", { "class": "button", text: "Play Again", id: "play-again-next" }));
       $("#quit-next").click(function () {
+        game.click();
         location.assign(url("https://www.google.com"));
       });
 
       $("#play-again-next").click(function () {
+        game.click();
         console.log(game.lives);
         game.stopSpeBGM();
         game.gameMenu();
       });
     },
 
+    endScreen: function () {
+      $("#gameDisp").html(" ");
+      $("#gameDisp").append($("<h2/>", { "class": "text-center welcome-text-head", text: "Game Over" }));
+      $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "nice try, but you died" }));
+      $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "final score: " + game.score }));
+      $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "you made it to round: " + game.round }));
+      $("#gameDisp").append($("<p/>", { "class": "button", text: "Quit", id: "quit-next" }));
+      $("#gameDisp").append($("<p/>", { "class": "button", text: "Game Menu", id: "play-again-next" }));
+
+      $("#quit-next").click(function () {
+        game.click();
+        location.assign(url("https://www.google.com"));
+      });
+
+      $("#play-again-next").click(function () {
+        game.click();
+        console.log(game.lives);
+        game.stopSpeBGM();
+        game.gameMenu();
+      });
+
+    },
+
     livesOut: function () {
+      $("#gameDisp").fadeIn(100)
       if (game.lives === 0) {
 
         // update high score and high rounds
@@ -546,25 +634,30 @@ $(document).ready(function () {
         $("#gameDisp").append($("<p/>", { "class": "button", text: "Proceed", id: "livesOut-next" }));
 
         $("#livesOut-next").click(function () {
-          $("#gameDisp").html(" ");
-          $("#gameDisp").append($("<h2/>", { "class": "text-center welcome-text-head", text: "Game Over" }));
-          $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "nice try, but you died" }));
-          $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "final score: " + game.score }));
-          $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "you made it to round: " + game.round }));
-          $("#gameDisp").append($("<p/>", { "class": "button", text: "Quit", id: "quit-next"}));
-          $("#gameDisp").append($("<p/>", { "class": "button", text: "Game Menu", id: "play-again-next"}));
+          game.stopSpeGO();
+          game.death();
 
-          $("#quit-next").click(function () {
-            location.assign(url("https://www.google.com"));
-          });
-
-          $("#play-again-next").click(function () {
-            console.log(game.lives);
-            game.stopSpeBGM();
-            game.gameMenu();
-          });
         });
       }
+    },
+
+    death: function () {
+      $("#gameDisp").hide();
+
+      let randy = Math.floor(Math.random() * 30);
+      console.log(game.scare[randy])
+      $("body").css("background", "url(" + game.scare[randy] + ")");
+      $("body").css("background-size", "cover");
+      $("body").css("background-repeat", "no-repeat");
+      $("body").css("background-position", "center");
+      $("body").css("background-color", "black");
+      $("body").css("background-attachment", "fixed");
+
+
+      setTimeout(function () {
+        $("#gameDisp").show();
+        game.endScreen();
+      }, 5000);
     }
   }
 

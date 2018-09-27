@@ -35,7 +35,7 @@ body {
 }
 
 .congratsDisp {
-  font-family: 'Eater', cursive;
+  font-family: 'Barrio', cursive;
   background-color: rgba(99, 99, 99, 0.3);
 
 
@@ -76,7 +76,7 @@ body {
 
 #allAnswer:hover{
   font-size:3.5rem;
-  color: darkred;
+  color: red;
 }
 
 .welcome-text-head{
