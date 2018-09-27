@@ -288,6 +288,16 @@ $(document).ready(function () {
       gameMenubgMusic.pause();
     },
 
+    laugh: function () {
+      game.laugh = document.createElement("audio");
+      game.laugh.setAttribute("src", "./assets/music/laugh.wav");
+      game.laugh.play();
+    },
+
+    stopLaugh: function () {
+      game.laugh.pause();
+    },
+
     click: function () {
       click = document.createElement("audio");
       click.setAttribute("src", "./assets/music/click.wav");
@@ -316,10 +326,9 @@ $(document).ready(function () {
       $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "don't take so long" }));
       $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "you lose another finger.." }));
       $("#gameDisp").append($("<h2/>", { "class": "text-center welcome-text-detail", text: "chances left: " + game.lives }));
-      $("#gameDisp").append($("<p/>", { "class": "button", text: "Proceed", id: "punishScreen-next" }));
+      // $("#gameDisp").append($("<p/>", { "class": "button", text: "Proceed", id: "punishScreen-next" }));
 
-      $("#punishScreen-next").on("click", function () {
-        game.click();
+      setTimeout(function () {
         game.stopSpeTO();
         game.speechScreem();
         $("#gameDisp").hide();
@@ -345,7 +354,39 @@ $(document).ready(function () {
           $("#gameDisp").fadeIn(1000);
           game.questionScreen();
         }, 1000 * 5);
-      });
+
+      }, 5000);
+
+
+      // $("#punishScreen-next").on("click", function () {
+
+      //   game.click();
+      //   game.stopSpeTO();
+      //   game.speechScreem();
+      //   $("#gameDisp").hide();
+
+      //   let randy = Math.floor(Math.random() * 10);
+      //   console.log(game.scare[randy])
+
+      //   $("#punishDisp").hide();
+      //   $("body").css("background", "url(" + game.scare[randy] + ")");
+      //   $("body").css("background-size", "cover");
+      //   $("body").css("background-repeat", "no-repeat");
+      //   $("body").css("background-position", "center");
+      //   $("body").css("background-color", "black");
+      //   $("body").css("background-attachment", "fixed");
+
+      //   setTimeout(function () {
+      //     $("#punishDisp").hide();
+      //     $("body").css("background", "url(./assets/imgs/bg.gif)");
+      //     $("body").css("background-repeat", "no-repeat");
+      //     $("body").css("background-position", "center");
+      //     $("body").css("background-color", "black");
+      //     $("body").css("background-attachment", "fixed");
+      //     $("#gameDisp").fadeIn(1000);
+      //     game.questionScreen();
+      //   }, 1000 * 5);
+      // });
     },
 
 
@@ -359,11 +400,12 @@ $(document).ready(function () {
       $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "Now you lose a finger..." }));
       $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "Stick out your hand" }));
       $("#gameDisp").append($("<h2/>", { "class": "text-center welcome-text-detail", text: "chances left: " + game.lives }));
-      $("#gameDisp").append($("<p/>", { "class": "button", text: "Proceed", id: "punishScreen-next" }));
+      // $("#gameDisp").append($("<p/>", { "class": "button", text: "Proceed", id: "punishScreen-next" }));
       $("#gameDisp").fadeIn(100)
 
-      $("#punishScreen-next").on("click", function () {
-        game.click();
+
+      setTimeout(function () {
+
         game.stopSpePun();
         game.speechScreem();
         $("#gameDisp").hide();
@@ -391,14 +433,49 @@ $(document).ready(function () {
         }, 1000 * 5);
 
 
-      });
+      }, 1000 * 5.5);
+
+
+
+
+
+      // $("#punishScreen-next").on("click", function () {
+      //   game.click();
+      //   game.stopSpePun();
+      //   game.speechScreem();
+      //   $("#gameDisp").hide();
+
+      //   let randy = Math.floor(Math.random() * 30);
+      //   console.log(game.scare[randy])
+
+      //   $("#punishDisp").hide();
+      //   $("body").css("background", "url(" + game.scare[randy] + ")");
+      //   $("body").css("background-size", "cover");
+      //   $("body").css("background-repeat", "no-repeat");
+      //   $("body").css("background-position", "center");
+      //   $("body").css("background-color", "black");
+      //   $("body").css("background-attachment", "fixed");
+
+      //   setTimeout(function () {
+      //     $("#punishDisp").hide();
+      //     $("body").css("background", "url(./assets/imgs/bg.gif)");
+      //     $("body").css("background-repeat", "no-repeat");
+      //     $("body").css("background-position", "center");
+      //     $("body").css("background-color", "black");
+      //     $("body").css("background-attachment", "fixed");
+      //     $("#gameDisp").fadeIn(1000);
+      //     game.questionScreen();
+      //   }, 1000 * 5);
+
+
+      // });
     },
 
     warningScreen: function () {
       $("#gameDisp").addClass("warningDisp");
       $("#gameDisp").append($("<h2/>", { "class": "text-center warning-text-head", text: "WARNING" }));
       $("#gameDisp").append($("<p/>", { "class": "text-center warning-text-detail", text: "This game contains graphic images and sounds that may be too scary for easily scared players. Please proceed with caution." }));
-      $("#gameDisp").append($("<span/>", { "class": "button", text: "Proceed", id: "welcomeScreen-next" }));
+      $("#gameDisp").append($("<p/>", { "class": "button", text: "Proceed", id: "welcomeScreen-next" }));
 
       $("#welcomeScreen-next").on("click", function () {
         $("#gameDisp").fadeOut(800)
@@ -433,7 +510,7 @@ $(document).ready(function () {
 
 
 
-      $("#gameDisp").append($("<span/>", { class: "button", id: "playButton", text: "Play" }))
+      $("#gameDisp").append($("<p/>", { class: "button", id: "playButton", text: "Play" }))
       $("#playButton").click(function () {
         game.click();
         game.stopGameMenubgMusic();
@@ -459,7 +536,7 @@ $(document).ready(function () {
       $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "You woke up in a abandoned medical facility" }));
       $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "Strapped to the bed and unable to move, you hear a voice over the PA systems" }));
       $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "Answer these next questions correctly within 20 seconds, and your life will be spared for another round... How long will your death be prolonged?" }));
-      $("#gameDisp").append($("<span/>", { "class": "button", text: "Proceed", id: "welcomeScreen-next" }));
+      $("#gameDisp").append($("<p/>", { "class": "button", text: "Proceed", id: "welcomeScreen-next" }));
       $("#gameDisp").fadeIn(1500)
 
       setTimeout(function () {
@@ -550,13 +627,19 @@ $(document).ready(function () {
       $("#gameDisp").append($("<h2/>", { "class": "text-center", text: "shall we keep going?" }));
       $("#gameDisp").append($("<h2/>", { "class": "text-center", text: "your current score: " + game.score }));
       $("#gameDisp").append($("<h2/>", { "class": "text-center", text: "chances left: " + game.lives }));
-      $("#gameDisp").append($("<span/>", { "class": "button", text: "Proceed", id: "rightAnswerDisplay-next" }));
-      $("#rightAnswerDisplay-next").on("click", function () {
-        game.click();
+      // $("#gameDisp").append($("<p/>", { "class": "button", text: "Proceed", id: "rightAnswerDisplay-next" }));
+
+      setTimeout(function () {
         $("#gameDisp").removeClass("congratsDisp");
         game.stopSpeCon();
         game.questionScreen();
-      });
+      }, 6500);
+
+
+
+      // $("#rightAnswerDisplay-next").on("click", function () {
+
+      // });
     },
 
     survived: function () {
@@ -600,16 +683,18 @@ $(document).ready(function () {
 
       $("#quit-next").click(function () {
         game.click();
-        location.assign(url("https://www.google.com"));
+        location.assign(url("https://www.github.com/trizmo/"));
       });
 
       $("#play-again-next").click(function () {
+        // clearInterval(deathScene);
+
         game.click();
+        game.stopLaugh();
         console.log(game.lives);
         game.stopSpeBGM();
         game.gameMenu();
       });
-
     },
 
     livesOut: function () {
@@ -631,19 +716,24 @@ $(document).ready(function () {
         $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "you're out of chances" }));
         $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "not a chance to spare" }));
         $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "it's time to meet your maker" }));
-        $("#gameDisp").append($("<p/>", { "class": "button", text: "Proceed", id: "livesOut-next" }));
+        // $("#gameDisp").append($("<p/>", { "class": "button", text: "Proceed", id: "livesOut-next" }));
 
-        $("#livesOut-next").click(function () {
-          game.stopSpeGO();
+        setTimeout(function () {
           game.death();
 
-        });
+        }, 5000);
+
+
+        // $("#livesOut-next").click(function () {
+        //   game.stopSpeGO();
+
+        // });
       }
     },
 
     death: function () {
       $("#gameDisp").hide();
-
+      game.laugh();
       let randy = Math.floor(Math.random() * 30);
       console.log(game.scare[randy])
       $("body").css("background", "url(" + game.scare[randy] + ")");
@@ -653,11 +743,26 @@ $(document).ready(function () {
       $("body").css("background-color", "black");
       $("body").css("background-attachment", "fixed");
 
+    //  var deathScene =  setInterval(function () {
+    //     let randy = Math.floor(Math.random() * 30);
+    //     console.log(game.scare[randy])
+    //     $("body").css("background", "url(" + game.scare[randy] + ")");
+    //     $("body").css("background-size", "cover");
+    //     $("body").css("background-repeat", "no-repeat");
+    //     $("body").css("background-position", "center");
+    //     $("body").css("background-color", "black");
+    //     $("body").css("background-attachment", "fixed");
+    //   }, 2000);
+
+      // setTimeout(function () {
+      //   clearInterval(deathScene);
+      // }, 5500);
+
 
       setTimeout(function () {
         $("#gameDisp").show();
         game.endScreen();
-      }, 5000);
+      }, 5500);
     }
   }
 
