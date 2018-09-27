@@ -563,6 +563,12 @@ $(document).ready(function () {
         game.welcomeScreen();
       });
 
+      $("#gameDisp").append($("<p/>", { class: "button", id: "quitButton", text: "Quit" }))
+      $("#quitButton").click(function () {
+        game.click();
+        location.assign("https://www.github.com/trizmo/");
+      });
+
     },
 
 
