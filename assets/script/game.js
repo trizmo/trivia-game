@@ -18,6 +18,7 @@ $(document).ready(function () {
     speechCongrats: "",
     backgroundMusic: "",
     speechTimeOut: "",
+    laugh: "",
     playedArr: [],
     highScore: 0,
     highRound: 0,
@@ -140,7 +141,108 @@ $(document).ready(function () {
         wrongAnswers: ["True", "False",],
         rightAnswer: "True",
         id: 16
+      },
+
+      {
+        question: "During World War 2, Disney produced a Mickey Mouse gas mask for children",
+        wrongAnswers: ["True", "False",],
+        rightAnswer: "True",
+        id: 17
+      },
+
+      {
+        question: "There are more universities in the US than there are prisons",
+        wrongAnswers: ["True", "False",],
+        rightAnswer: "False",
+        id: 18
+      },
+
+      {
+        question: "Charlie Chaplin's corpse was dug up after his funeral and was held for ransom for 2 months",
+        wrongAnswers: ["True", "False",],
+        rightAnswer: "True",
+        id: 19
+      },
+
+      {
+        question: "On average, right-handed people die 3 years earlier than left-handed people.",
+        wrongAnswers: ["True", "False",],
+        rightAnswer: "False",
+        id: 20
+      },
+
+      {
+        question: "Every day, about 153,000 people die.",
+        wrongAnswers: ["True", "False",],
+        rightAnswer: "True",
+        id: 21
+      },
+
+      {
+        question: "In 1977 humans recieved a radio signal from space. It's origins remain unknown.",
+        wrongAnswers: ["True", "False",],
+        rightAnswer: "True",
+        id: 22
+      },
+
+      {
+        question: "Within the last 70 years, less than 6 commericial airliners have disappeared.",
+        wrongAnswers: ["True", "False",],
+        rightAnswer: "False",
+        id: 23
+      },
+
+      {
+        question: "In North Korea, you must chose from 28 government approved hair styles.",
+        wrongAnswers: ["True", "False",],
+        rightAnswer: "True",
+        id: 24
+      },
+
+      {
+        question: "A skeleton found in Chile proved to be from a human that was only 6-8 inches tall who lived for 8 years.",
+        wrongAnswers: ["True", "False",],
+        rightAnswer: "True",
+        id: 25
+      },
+
+      {
+        question: "Abracadabra was never used by witches to cast dark spells.",
+        wrongAnswers: ["True", "False",],
+        rightAnswer: "False",
+        id: 26
+      },
+
+      {
+        question: "People have died from laughter.",
+        wrongAnswers: ["True", "False",],
+        rightAnswer: "True",
+        id: 27
+      },
+
+      {
+        question: "Death row inmates in Japan aren't given their execution date.",
+        wrongAnswers: ["True", "False",],
+        rightAnswer: "True",
+        id: 28
+      },
+
+      {
+        question: "While filming 'The Exorcist', they had to bring in a Priest several times for strange things happening, including actors getting hurt, and the set burning down.",
+        wrongAnswers: ["True", "False",],
+        rightAnswer: "True",
+        id: 29
+      },
+
+      {
+        question: "Candles have never caused house fires.",
+        wrongAnswers: ["True", "False",],
+        rightAnswer: "False",
+        id: 30
       }
+
+
+
     ],
 
 
@@ -198,14 +300,14 @@ $(document).ready(function () {
       }
     },
 
-    // ## RANDOMIZER 16
+    // ## RANDOMIZER 30
     rand: function () {
-      let randy = Math.floor(Math.random() * (16))
+      let randy = Math.floor(Math.random() * (30))
       if (this.playedArr.includes(randy)) {
         game.randomPicker = false;
         console.log("rand function picked duplicate number, picking again...");
         game.rand();
-      } else if (this.playedArr.length === 15) {
+      } else if (this.playedArr.length === 29) {
 
       } else {
         game.randomPicker = true;
@@ -216,8 +318,15 @@ $(document).ready(function () {
       }
     },
 
-
-
+    // DEATH SCENE 
+    deathScene: "",
+    
+    stopDeathScene: function () {
+      setTimeout(function () {
+        $("#gameDisp").fadeIn(1250);
+        game.endScreen();
+      }, 5500);
+    },
 
 
     // ## SOUNDS
@@ -289,13 +398,13 @@ $(document).ready(function () {
     },
 
     laugh: function () {
-      game.laugh = document.createElement("audio");
-      game.laugh.setAttribute("src", "./assets/music/laugh.wav");
-      game.laugh.play();
+      laugh = document.createElement("audio");
+      laugh.setAttribute("src", "./assets/music/laugh.mp3");
+      laugh.play();
     },
 
     stopLaugh: function () {
-      game.laugh.pause();
+      laugh.pause();
     },
 
     click: function () {
@@ -356,37 +465,6 @@ $(document).ready(function () {
         }, 1000 * 5);
 
       }, 5000);
-
-
-      // $("#punishScreen-next").on("click", function () {
-
-      //   game.click();
-      //   game.stopSpeTO();
-      //   game.speechScreem();
-      //   $("#gameDisp").hide();
-
-      //   let randy = Math.floor(Math.random() * 10);
-      //   console.log(game.scare[randy])
-
-      //   $("#punishDisp").hide();
-      //   $("body").css("background", "url(" + game.scare[randy] + ")");
-      //   $("body").css("background-size", "cover");
-      //   $("body").css("background-repeat", "no-repeat");
-      //   $("body").css("background-position", "center");
-      //   $("body").css("background-color", "black");
-      //   $("body").css("background-attachment", "fixed");
-
-      //   setTimeout(function () {
-      //     $("#punishDisp").hide();
-      //     $("body").css("background", "url(./assets/imgs/bg.gif)");
-      //     $("body").css("background-repeat", "no-repeat");
-      //     $("body").css("background-position", "center");
-      //     $("body").css("background-color", "black");
-      //     $("body").css("background-attachment", "fixed");
-      //     $("#gameDisp").fadeIn(1000);
-      //     game.questionScreen();
-      //   }, 1000 * 5);
-      // });
     },
 
 
@@ -435,40 +513,6 @@ $(document).ready(function () {
 
       }, 1000 * 5.5);
 
-
-
-
-
-      // $("#punishScreen-next").on("click", function () {
-      //   game.click();
-      //   game.stopSpePun();
-      //   game.speechScreem();
-      //   $("#gameDisp").hide();
-
-      //   let randy = Math.floor(Math.random() * 30);
-      //   console.log(game.scare[randy])
-
-      //   $("#punishDisp").hide();
-      //   $("body").css("background", "url(" + game.scare[randy] + ")");
-      //   $("body").css("background-size", "cover");
-      //   $("body").css("background-repeat", "no-repeat");
-      //   $("body").css("background-position", "center");
-      //   $("body").css("background-color", "black");
-      //   $("body").css("background-attachment", "fixed");
-
-      //   setTimeout(function () {
-      //     $("#punishDisp").hide();
-      //     $("body").css("background", "url(./assets/imgs/bg.gif)");
-      //     $("body").css("background-repeat", "no-repeat");
-      //     $("body").css("background-position", "center");
-      //     $("body").css("background-color", "black");
-      //     $("body").css("background-attachment", "fixed");
-      //     $("#gameDisp").fadeIn(1000);
-      //     game.questionScreen();
-      //   }, 1000 * 5);
-
-
-      // });
     },
 
     warningScreen: function () {
@@ -493,6 +537,8 @@ $(document).ready(function () {
     },
 
     gameMenu: function () {
+      // game.stopLaugh();
+      clearInterval(game.deathScene);
       $("body").css("background", "url(./assets/imgs/bg.gif)");
       $("body").css("background-repeat", "no-repeat");
       $("body").css("background-position", "center");
@@ -504,7 +550,7 @@ $(document).ready(function () {
       $("#gameDisp").html(" ");
       $("#gameDisp").addClass("game-menu");
       $("#gameDisp").append($("<h2/>", { "class": "text-center welcome-text-head", text: "welcome to Purgatory" }));
-      $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "A Scary Trivia Game" }));
+      $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "A Scary Facts Trivia Game" }));
       $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "High Score: " + game.highScore }));
       $("#gameDisp").append($("<p/>", { "class": "text-center welcome-text-detail", text: "Highest Round: " + game.highRound }));
 
@@ -683,7 +729,7 @@ $(document).ready(function () {
 
       $("#quit-next").click(function () {
         game.click();
-        location.assign(url("https://www.github.com/trizmo/"));
+        location.assign("https://www.github.com/trizmo/");
       });
 
       $("#play-again-next").click(function () {
@@ -743,26 +789,20 @@ $(document).ready(function () {
       $("body").css("background-color", "black");
       $("body").css("background-attachment", "fixed");
 
-    //  var deathScene =  setInterval(function () {
-    //     let randy = Math.floor(Math.random() * 30);
-    //     console.log(game.scare[randy])
-    //     $("body").css("background", "url(" + game.scare[randy] + ")");
-    //     $("body").css("background-size", "cover");
-    //     $("body").css("background-repeat", "no-repeat");
-    //     $("body").css("background-position", "center");
-    //     $("body").css("background-color", "black");
-    //     $("body").css("background-attachment", "fixed");
-    //   }, 2000);
+      game.deathScene = setInterval(function () {
+        let randy = Math.floor(Math.random() * 30);
+        console.log(game.scare[randy])
+        $("body").css("background", "url(" + game.scare[randy] + ")");
+        $("body").css("background-size", "cover");
+        $("body").css("background-repeat", "no-repeat");
+        $("body").css("background-position", "center");
+        $("body").css("background-color", "black");
+        $("body").css("background-attachment", "fixed");
+      }, 2000);
 
-      // setTimeout(function () {
-      //   clearInterval(deathScene);
-      // }, 5500);
+      game.stopDeathScene();
 
 
-      setTimeout(function () {
-        $("#gameDisp").show();
-        game.endScreen();
-      }, 5500);
     }
   }
 
