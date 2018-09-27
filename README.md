@@ -11,17 +11,17 @@ Can you make it to the end?
 ## 30 Scary Facts
 ## 30 Scary Images
 
-#Technology used:
+## Technology used:
 Javascript, JQuery
 
-#Screenshot
+## Screenshot
 <img src="./assets/imgs/screenshot.jpg">
 
 
-#NOTES:
+# NOTES:
 
 
-#PSEUDOCOE
+## PSEUDOCOE
 game starts
 welcome-screen:
 	instructions
@@ -40,7 +40,7 @@ display:
 		if incorrect-answers === 10
 		punishment
 
-# GAME THEME
+## GAME THEME
 halloween themed scary facts
 
 
